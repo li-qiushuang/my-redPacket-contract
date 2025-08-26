@@ -9,6 +9,7 @@ contract RedPacket {
         uint256 claimedCount;
         uint256 remainingAmount;
         bool isActive;
+        string message; // 新增：留言信息
         mapping(address => bool) claimed;
     }
 
@@ -19,7 +20,8 @@ contract RedPacket {
         bytes32 indexed packetId,
         address indexed creator,
         uint256 totalAmount,
-        uint256 totalCount
+        uint256 totalCount,
+        string message // 新增：在事件中包含留言
     );
     
     event PacketClaimed(
@@ -44,11 +46,12 @@ contract RedPacket {
         _;
     }
 
-    function createPacket(uint256 totalCount) external payable returns (bytes32) {
+    function createPacket(uint256 totalCount, string memory message) external payable returns (bytes32) {
         require(msg.value > 0, "Must send ETH");
         require(totalCount > 0, "At least one red packet");
+        require(bytes(message).length <= 100, "Message too long"); // 限制留言长度
 
-        bytes32 packetId = keccak256(abi.encodePacked(msg.sender, block.timestamp, msg.value));
+        bytes32 packetId = keccak256(abi.encodePacked(msg.sender, block.timestamp, msg.value, message));
         
         Packet storage newPacket = packets[packetId];
         newPacket.creator = msg.sender;
@@ -56,10 +59,11 @@ contract RedPacket {
         newPacket.totalCount = totalCount;
         newPacket.remainingAmount = msg.value;
         newPacket.isActive = true;
+        newPacket.message = message; // 存储留言
 
         packetIds.push(packetId);
 
-        emit PacketCreated(packetId, msg.sender, msg.value, totalCount);
+        emit PacketCreated(packetId, msg.sender, msg.value, totalCount, message);
         return packetId;
     }
 
@@ -123,7 +127,8 @@ contract RedPacket {
         uint256 totalCount,
         uint256 claimedCount,
         uint256 remainingAmount,
-        bool isActive
+        bool isActive,
+        string memory message // 新增：返回留言信息
     ) {
         Packet storage packet = packets[packetId];
         return (
@@ -132,7 +137,8 @@ contract RedPacket {
             packet.totalCount,
             packet.claimedCount,
             packet.remainingAmount,
-            packet.isActive
+            packet.isActive,
+            packet.message // 返回留言
         );
     }
 
