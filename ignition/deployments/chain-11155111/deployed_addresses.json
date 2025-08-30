@@ -1,4 +1,5 @@
 {
   "RedPacketModule#RedPacket": "0x4f3181870eA5D23b55e6B01799d3D454cdf6B9A9",
-  "SimpleStorageModule#SimpleStorage": "0x126809FCe8dE3B771ACf22dECAC79edFec82EB42"
+  "SimpleStorageModule#SimpleStorage": "0x126809FCe8dE3B771ACf22dECAC79edFec82EB42",
+  "MyToken#MyToken": "0xeb7F36Fa33C1c689e5B8e84f56721652bcbed5B8"
 }

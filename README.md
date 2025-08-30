@@ -1,8 +1,10 @@
 # Sample Hardhat Project
  
 ## - [ ] npx hardhat --init      【初始化一个 Hardhat 项目】
-## - [ ] npx hardhat compile
-## npx hardhat ignition deploy ./ignition/modules/RedPacket.js --network sepolia
+## - [ ] npx hardhat compile      [编译]【如果多次编译可删除文件artifacts和cache】
+## npx hardhat ignition deploy ./ignition/modules/RedPacket.js --network sepolia    [部署合约]
+
+##  npx hardhat verify --network sepolia  合约地址    【把合约代码开源】
 
 
 ## 下面是部署成功的信息  
